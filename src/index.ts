@@ -95,7 +95,10 @@ export const printers = {
       try {
         return embed(path, print, textToDoc, options);
       } catch (e) {
-        console.error("Formatting failed.", e);
+        if (e instanceof Error) {
+          e.message = `Formatting Error: ${e.message}`;
+        }
+        throw e;
       }
 
       return options.originalText;
